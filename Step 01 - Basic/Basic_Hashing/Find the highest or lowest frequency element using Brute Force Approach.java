@@ -1,49 +1,43 @@
-import java.util.*;
-
 class FrequencyCounter {
 
-    // Method to count frequency and find elements with max and min frequency
     public void countFreq(int[] arr, int n) {
-        boolean[] visited = new boolean[n]; // To track which elements are already processed
-        int maxFreq = 0, minFreq = n;       // Frequency bounds initialization
-        int maxEle = 0, minEle = 0;         // Elements with max and min frequency
+        if (n == 0) return; // Handle empty array case
+
+        boolean[] visited = new boolean[n];
+        int maxFreq = 0, minFreq = n + 1; // n + 1 ensures the first count updates this
+        int maxEle = 0, minEle = 0;
 
         for (int i = 0; i < n; i++) {
+            if (visited[i]) continue;
 
-            // If element already processed, skip
-            if (visited[i])
-                continue;
-
-            // Count how many times arr[i] occurs
             int count = 1;
             for (int j = i + 1; j < n; j++) {
                 if (arr[i] == arr[j]) {
-                    visited[j] = true; // Mark as counted
+                    visited[j] = true;
                     count++;
                 }
             }
 
-            // Update max frequency and corresponding element
+            // Update Max
             if (count > maxFreq) {
                 maxEle = arr[i];
                 maxFreq = count;
             }
 
-            // Update min frequency and corresponding element
+            // Update Min
             if (count < minFreq) {
                 minEle = arr[i];
                 minFreq = count;
             }
         }
 
-        // Print final results
-        System.out.println("The highest frequency element is: " + maxEle);
-        System.out.println("The lowest frequency element is: " + minEle);
+        System.out.println("The highest frequency element is: " + maxEle + " (Freq: " + maxFreq + ")");
+        System.out.println("The lowest frequency element is: " + minEle + " (Freq: " + minFreq + ")");
     }
 
     public static void main(String[] args) {
-        FrequencyCounter fc = new FrequencyCounter();       // Create object of the class
-        int[] arr = {10, 5, 10, 15, 10, 5};                  // Sample array
-        fc.countFreq(arr, arr.length);                      // Call the function
+        FrequencyCounter fc = new FrequencyCounter();
+        int[] arr = {10, 5, 10, 15, 10, 5};
+        fc.countFreq(arr, arr.length);
     }
 }
